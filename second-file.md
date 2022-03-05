@@ -1,2 +1,2 @@
-# emangulo.github.io Second File
+# Second File
 This is the body of the second file.
