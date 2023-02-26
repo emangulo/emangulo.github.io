@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sorter</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer type="text/javascript" src="./script.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <p>Scan UPC</p>
+      <input id="input" />
+      <button id="button" onclick="getGroup()"></button>
+      <p id="sku">...</p>
+      <p id="settings">N/A</p>
+    </div>
+
+    <div class="main-container">
+      <div class="box">
+        <h1>GROUP</h1>
+        <h2 id="group"></h2>
+      </div>
+      <div class="box">
+        <h1>LOCATION</h1>
+        <h2 id="location"></h2>
+      </div>
+    </div>
+  </body>
+</html>
