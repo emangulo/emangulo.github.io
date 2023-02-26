@@ -25,7 +25,7 @@ let data = [
   22
 ]
 
-let groupSize = 8;
+let groupSize = 10;
 
 
 
