@@ -37,7 +37,9 @@ document.getElementById("input").focus(); //Initial focus
 document.getElementById("input").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     event.preventDefault;
-    document.getElementById("button").click();
+    if (document.getElementById("input").value != ''){
+      document.getElementById("button").click();
+    }
   }
 });
 
