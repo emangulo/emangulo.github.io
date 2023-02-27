@@ -78,7 +78,7 @@ let groupSize = 8;
 
 
 // Initital settings
-document.getElementById("settings").innerHTML = `SKUs: ${skuData.length}. Group Size: ${groupSize} Groups: ${Math.ceil(skuData.length / groupSize)}`// Display settings
+document.getElementById("settingsDisplay").innerHTML = `SKUs: ${skuData.length}. Group Size: ${groupSize} Groups: ${Math.ceil(skuData.length / groupSize)}`// Display settings
 document.getElementById("input").focus(); //Initial focus
 
 var previousGroup = "INITIAL"
@@ -99,7 +99,7 @@ function getGroup() {
   var group;
   var location;
   var backgroundColor;
-  document.getElementById("sku").innerHTML = inputValue;
+  document.getElementById("skuDisplay").innerHTML = inputValue;
 
   if (skuData.includes(inputValue)){
     var index = skuData.indexOf(inputValue);
@@ -124,7 +124,7 @@ function getGroup() {
   document.getElementById("location").innerHTML = location;
 
   document.body.style.backgroundColor = backgroundColor;
-  document.getElementById("settings").style.color = backgroundColor;
+  document.getElementById("settingsDisplay").style.color = backgroundColor;
 
   // Reset input
   document.getElementById("input").value = '';
