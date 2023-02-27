@@ -1,6 +1,6 @@
 
 // Input UPC numbers and the numbers of SKUs per person to sort in each group here
-let data = [
+let skuData = [
   700053843400,
   700053843417,
   700053843479,
@@ -78,7 +78,7 @@ let groupSize = 8;
 
 
 // Initital settings
-document.getElementById("settings").innerHTML = `SKUs: ${data.length}. Group Size: ${groupSize} Groups: ${Math.ceil(data.length / groupSize)}`// Display settings
+document.getElementById("settings").innerHTML = `SKUs: ${skuData.length}. Group Size: ${groupSize} Groups: ${Math.ceil(skuData.length / groupSize)}`// Display settings
 document.getElementById("input").focus(); //Initial focus
 
 var previousGroup = "INITIAL"
@@ -96,28 +96,27 @@ document.getElementById("input").addEventListener("keypress", function(event) {
 // This is where the program begins
 function getGroup() {
   var inputValue = Number(document.getElementById("input").value);
-  var index;
   var group;
   var location;
   var backgroundColor;
   document.getElementById("sku").innerHTML = inputValue;
 
-  if (data.includes(inputValue)){
-    index = data.indexOf(inputValue);
+  if (skuData.includes(inputValue)){
+    var index = skuData.indexOf(inputValue);
     
     group = String.fromCharCode(Math.floor(index/groupSize) + 97).toUpperCase();
     location = index % groupSize + 1;
     
-    if (group == previousGroup || previousGroup == "INITIAL") {
+    if (group == previousGroup || previousGroup == "INITIAL") {  // Makes screen a different color at group change
       backgroundColor = "white";
     } else {
-      backgroundColor = "red";
+      backgroundColor = "orange";
     }
     previousGroup = group;
 
   } else {
     group = 'N/A';
-    location = 'N/A';
+    location = '';
     backgroundColor = "red";
   }
   
