@@ -1,39 +1,89 @@
 
 // Input UPC numbers and the numbers of SKUs per person to sort in each group here
 let data = [
-  9780307279286,
-  9780804172707,
-  9780525657743,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  9780141037493,
-  11,
-  12,
-  13,
-  14,
-  15,
-  16,
-  17,
-  18,
-  19,
-  20,
-  21,
-  22
+  700053843400,
+  700053843417,
+  700053843479,
+  700053843486,
+  700053843493,
+  700053843509,
+  700053843516,
+  700053843523,
+  700053843530,
+  700053843547,
+  700053843554,
+  700053843561,
+  700053843578,
+  700053843585,
+  700053843592,
+  700053843608,
+  700053843677,
+  700053843684,
+  191930202395,
+  700053630116,
+  700053630123,
+  700053630130,
+  700053630147,
+  700053630758,
+  700053630765,
+  700053630772,
+  700053630789,
+  700053630796,
+  700053630802,
+  700053630819,
+  700053630826,
+  700053630833,
+  700053630857,
+  700053630871,
+  700053630888,
+  700053630901,
+  700053630918,
+  700053288645,
+  700053288652,
+  700053288669,
+  700053288676,
+  700053288683,
+  700053288690,
+  700053288706,
+  700053288713,
+  700053288720,
+  700053288737,
+  700053288744,
+  700053288751,
+  700053288768,
+  700053288775,
+  700053288782,
+  191476702618,
+  191476702793,
+  191476702977,
+  191476703134,
+  191476703271,
+  191476703417,
+  191476703653,
+  191476703943,
+  191476704254,
+  191476704575,
+  191476704889,
+  191476705183,
+  191476705480,
+  191476705787,
+  191476706081,
+  191476706326,
+  191476706807,
+  191476707040,
 ]
 
-let groupSize = 10;
+let groupSize = 8;
 
 
 
 // Initital settings
-document.getElementById("settings").innerHTML = `SKUs: ${data.length}. Group Size: ${groupSize}` // Display settings
-
+document.getElementById("settings").innerHTML = `SKUs: ${data.length}. Group Size: ${groupSize} Groups: ${Math.ceil(data.length / groupSize)}`// Display settings
 document.getElementById("input").focus(); //Initial focus
 
+var previousGroup = "INITIAL"
+
+// When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     event.preventDefault;
@@ -45,19 +95,29 @@ document.getElementById("input").addEventListener("keypress", function(event) {
 
 // This is where the program begins
 function getGroup() {
-  var input = Number(document.getElementById("input").value);
-  var location;
+  var inputValue = Number(document.getElementById("input").value);
+  var index;
   var group;
+  var location;
   var backgroundColor;
-  document.getElementById("sku").innerHTML = input;
+  document.getElementById("sku").innerHTML = inputValue;
 
-  if (data.includes(input)){
-    location = data.indexOf(input) + 1;
-    group = String.fromCharCode(Math.ceil(location/groupSize) + 96).toUpperCase();
-    backgroundColor = "white";
+  if (data.includes(inputValue)){
+    index = data.indexOf(inputValue);
+    
+    group = String.fromCharCode(Math.floor(index/groupSize) + 97).toUpperCase();
+    location = index % groupSize + 1;
+    
+    if (group == previousGroup || previousGroup == "INITIAL") {
+      backgroundColor = "white";
+    } else {
+      backgroundColor = "red";
+    }
+    previousGroup = group;
+
   } else {
-    location = 'N/A';
     group = 'N/A';
+    location = 'N/A';
     backgroundColor = "red";
   }
   
