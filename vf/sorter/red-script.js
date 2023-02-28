@@ -103,7 +103,7 @@ function getGroup() {
   if (skuData.includes(inputValue)){
     var index = skuData.indexOf(inputValue);
     
-    group = String.fromCharCode(Math.floor(index/groupSize) + 97).toUpperCase();
+    group = String.fromCharCode(Math.floor(index/groupSize) + 110).toUpperCase();
     location = index % groupSize + 1;
     
     if (group == previousGroup || previousGroup == "INITIAL") {  // Makes screen a different color at group change
