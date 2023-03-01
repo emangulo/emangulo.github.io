@@ -81,7 +81,8 @@ let groupSize = 8;
 document.getElementById("settingsDisplay").innerHTML = `SKUs: ${skuData.length}. Group Size: ${groupSize} Groups: ${Math.ceil(skuData.length / groupSize)}`// Display settings
 document.getElementById("input").focus(); //Initial focus
 
-var previousGroup = "INITIAL"
+var previousGroup = "INITIAL";
+var count = 0;
 
 // When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function(event) {
@@ -116,15 +117,19 @@ function getGroup() {
 
   } else {
     group = 'N/A';
-    location = '';
+    location = 'N/A';
     backgroundColor = "red";
   }
   
+  count += 1;
+
   document.getElementById("group").innerHTML = group;
   document.getElementById("location").innerHTML = location;
+  document.getElementById("counter").innerHTML = `COUNT: ${count}`
 
   document.body.style.backgroundColor = backgroundColor;
   document.getElementById("settingsDisplay").style.color = backgroundColor;
+
 
   // Reset input
   document.getElementById("input").value = '';
