@@ -125,7 +125,7 @@ function getGroup() {
 
   document.getElementById("group").innerHTML = group;
   document.getElementById("location").innerHTML = location;
-  document.getElementById("counter").innerHTML = `COUNT: ${count}`
+  document.getElementById("counter").innerHTML = `Count: ${count}`
 
   document.body.style.backgroundColor = backgroundColor;
   document.getElementById("settingsDisplay").style.color = backgroundColor;
