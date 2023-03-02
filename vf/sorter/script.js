@@ -116,7 +116,7 @@ function getGroup() {
     previousGroup = group;
 
   } else {
-    group = 'N/A';
+    group = 'RED';
     location = '';
     backgroundColor = "red";
   }
