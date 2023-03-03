@@ -148,23 +148,30 @@ let groupSize = 8;
 
 
 // Initital settings
-document.getElementById("settingsDisplay").innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`// Display settings
-document.getElementById("input").focus(); //Initial focus
-
 var previousGroup = "INITIAL";
 var count = 0;
+let skuListSelection = 'A'; // link the input for sku list selection frin html here
+
+document.getElementById("settingsDisplay").innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`// Display settings
+document.getElementById("input").focus(); //Initial focus
+document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection}`;
+
 
 // When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     event.preventDefault;
-    if (document.getElementById("input").value != ''){
-      document.getElementById("button").click();
+    if (document.getElementById("input").value != '' && document.getElementById("input").value != 'r'){
+      getGroup();
+    } else if (document.getElementById("input").value == 'r'){
+      skuListSelection = skuListSelection == 'A' ? 'B' : 'A';
+      document.getElementById("input").value = '';
+      document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection}`;
     }
   }
 });
 
-// This is where the program begins
+// When UPC is scanned
 function getGroup() {
   var inputValue = Number(document.getElementById("input").value);
   var group;
@@ -173,7 +180,6 @@ function getGroup() {
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
   // Select correct SKU list
-  let skuListSelection = 'A'; // link the input for sku list selection frin html here
   let skuList;
   let startingLetterNum;
   if (skuListSelection == 'A') {
