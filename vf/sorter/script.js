@@ -154,7 +154,7 @@ let skuListSelection = 'A'; // link the input for sku list selection frin html h
 
 document.getElementById("settingsDisplay").innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`// Display settings
 document.getElementById("input").focus(); //Initial focus
-document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection}`;
+document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - List ${skuListSelection}`;
 
 
 // When "Enter" is pressed
@@ -166,7 +166,7 @@ document.getElementById("input").addEventListener("keypress", function(event) {
     } else if (document.getElementById("input").value == 'r'){
       skuListSelection = skuListSelection == 'A' ? 'B' : 'A';
       document.getElementById("input").value = '';
-      document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection}`;
+      document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - List ${skuListSelection}`;
     }
   }
 });
