@@ -1,6 +1,5 @@
-
 // Input UPC numbers and the numbers of SKUs per person to sort in each group here
-let skuData = [
+let skuListA = [
   700053843400,
   700053843417,
   700053843479,
@@ -73,28 +72,106 @@ let skuData = [
   191476707040,
 ]
 
+let skuListB = [
+  196244904928,
+  196244872159,
+  196244874115,
+  196245114319,
+  196245967519,
+  700053804722,
+  700053803947,
+  658100946690,
+  658100946706,
+  658100946720,
+  658100946737,
+  706420455948,
+  887682620913,
+  637439878797,
+  191165040694,
+  191476132637,
+  191163545627,
+  191164661333,
+  193391232690,
+  196244853431,
+  192828066167,
+  196014429552,
+  193391319643,
+  193391749792,
+  196244856333,
+  194902229901,
+  196244783929,
+  196010272237,
+  194901130048,
+  196244555182,
+  196244870360,
+  194905589828,
+  195438352040,
+  194901421764,
+  196015340320,
+  195436818708,
+  196014235948,
+  196244842534,
+  196244871428,
+  196244898234,
+  196244973733,
+  196244905239,
+  196244873507,
+  196244946973,
+  196244921420,
+  196244922908,
+  196244907646,
+  706421388108,
+  196570576837,
+  196571176081,
+  658100946713,
+  888654802191,
+  196244869685,
+  196014429576,
+  194905539137,
+  196244787088,
+  192363877211,
+  195438342850,
+  194903673727,
+  196244794017,
+  195436425265,
+  195436453275,
+  196014236020,
+  196014236082,
+  196244895981,
+  196244897725,
+  196014239212,
+  196244872043,
+  700053333925,
+]
+
 let groupSize = 8;
 
 
-
 // Initital settings
-document.getElementById("settingsDisplay").innerHTML = `SKUs: ${skuData.length}. Group Size: ${groupSize} Groups: ${Math.ceil(skuData.length / groupSize)}`// Display settings
-document.getElementById("input").focus(); //Initial focus
-
 var previousGroup = "INITIAL";
 var count = 0;
+let skuListSelection = 'A'; // link the input for sku list selection frin html here
+
+document.getElementById("settingsDisplay").innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`// Display settings
+document.getElementById("input").focus(); //Initial focus
+document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection}`;
+
 
 // When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     event.preventDefault;
-    if (document.getElementById("input").value != ''){
-      document.getElementById("button").click();
+    if (document.getElementById("input").value != '' && document.getElementById("input").value != 'r'){
+      getGroup();
+    } else if (document.getElementById("input").value == 'r'){
+      skuListSelection = skuListSelection == 'A' ? 'B' : 'A';
+      document.getElementById("input").value = '';
+      document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection}`;
     }
   }
 });
 
-// This is where the program begins
+// When UPC is scanned
 function getGroup() {
   var inputValue = Number(document.getElementById("input").value);
   var group;
@@ -102,10 +179,21 @@ function getGroup() {
   var backgroundColor;
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
-  if (skuData.includes(inputValue)){
-    var index = skuData.indexOf(inputValue);
+  // Select correct SKU list
+  let skuList;
+  let startingLetterNum;
+  if (skuListSelection == 'A') {
+    skuList = skuListA;
+    startingLetterNum = 97;
+  } else if (skuListSelection == 'B') {
+    skuList = skuListB;
+    startingLetterNum = 110;
+  }
+
+  if (skuList.includes(inputValue)){
+    var index = skuList.indexOf(inputValue);
     
-    group = String.fromCharCode(Math.floor(index/groupSize) + 97).toUpperCase();
+    group = String.fromCharCode(Math.floor(index/groupSize) + startingLetterNum).toUpperCase();
     location = index % groupSize + 1;
     
     if (group == previousGroup || previousGroup == "INITIAL") {  // Makes screen a different color at group change
