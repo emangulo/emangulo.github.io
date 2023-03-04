@@ -38,7 +38,7 @@ let groupSize = 8;
 // Initital settings
 var previousGroup = "INITIAL";
 var count = 0;
-let skuListSelection = "A";
+let skuListSelection = "A"; // Defult SKU list
 
 document.getElementById("settingsDisplay").innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`; // Display settings
 document.getElementById("input").focus(); //Initial focus
@@ -53,13 +53,13 @@ document.getElementById("input").addEventListener("keypress", function (event) {
       document.getElementById("input").value = "";
       document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - List ${skuListSelection}`;
     } else if (document.getElementById("input").value != "") {
-      getGroup();
+      getGroupLocation();
     }
   }
 });
 
 // When UPC is scanned
-function getGroup() {
+function getGroupLocation() {
   var inputValue = Number(document.getElementById("input").value);
   var group;
   var location;
@@ -67,33 +67,35 @@ function getGroup() {
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
   // Select correct SKU list
-  let skuList;
-  let startingLetterNum;
-  if (skuListSelection == "A") {
-    skuList = skuListA;
-    startingLetterNum = 97;
-  } else if (skuListSelection == "B") {
+  let skuList = skuListA;
+  let startingLetterNum = 65; // Letter A
+  let noSkuMessage = 'RED';
+  let noSkuColor = 'red';
+  
+  if (skuListSelection == "B") {
     skuList = skuListB;
-    startingLetterNum = 110;
+    startingLetterNum = 78; // Letter N
+    noSkuMessage = 'BLUE';
+    noSkuColor = 'blue';
   }
 
+  // Get group and location
   if (skuList.includes(inputValue)) {
     var index = skuList.indexOf(inputValue);
 
-    group = String.fromCharCode(Math.floor(index / groupSize) + startingLetterNum).toUpperCase();
+    group = String.fromCharCode(Math.floor(index / groupSize) + startingLetterNum);
     location = (index % groupSize) + 1;
 
     if (group == previousGroup || previousGroup == "INITIAL") {
-      // Makes screen a different color at group change
       backgroundColor = "white";
     } else {
       backgroundColor = "orange";
     }
     previousGroup = group;
   } else {
-    group = "RED";
+    group = noSkuMessage;
     location = "";
-    backgroundColor = "red";
+    backgroundColor = noSkuColor;
   }
 
   count += 1;
