@@ -31,10 +31,8 @@ function getGroupLocation() {
 
   count += 1;
 
-  console.log(skuListC);
-
   document.getElementById("location").innerHTML = location;
-  document.getElementById("counter").innerHTML = `Count: ${count}`;
+  document.getElementById("counter").innerHTML = `Count: ${count}. Locations: ${skuListC.length}`;
 
   document.body.style.backgroundColor = backgroundColor;
   document.getElementById("settingsDisplay").style.color = backgroundColor;
