@@ -33,12 +33,15 @@ let skuListB = [
   196244897725, 196014239212, 196244872043, 700053333925,
 ];
 
+let skuListC = [];
+
 let groupSize = 8;
 
 // Initital settings
 var previousGroup = "INITIAL";
 var count = 0;
 let skuListSelection = "A"; // Defult SKU list
+let skuListSelectionName = 'MAIN'; // Defult SKU list name
 
 document.getElementById("settingsDisplay").innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`; // Display settings
 document.getElementById("input").focus(); //Initial focus
@@ -49,9 +52,23 @@ document.getElementById("input").addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault;
     if (document.getElementById("input").value == "r") {
-      skuListSelection = skuListSelection == "A" ? "B" : "A";
+      
+      if (skuListSelection == 'A') {
+        skuListSelection = 'B';
+        skuListSelectionName = 'RED';
+      } else if (skuListSelection == 'B') {
+        skuListSelection = 'C';
+        skuListSelectionName = 'BLUE';
+      } else {
+        skuListSelection = 'A';
+        skuListSelectionName = 'MAIN';
+      }
+
       document.getElementById("input").value = "";
-      document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection == 'B' ? 'RED' : 'MAIN'}`;
+      document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelectionName}`;
+
+    } else if (document.getElementById("input").value != "" && skuListSelection == 'C') {
+      getLocation();
     } else if (document.getElementById("input").value != "") {
       getGroupLocation();
     }
@@ -103,6 +120,33 @@ function getGroupLocation() {
   document.getElementById("group").innerHTML = group;
   document.getElementById("location").innerHTML = location;
   document.getElementById("counter").innerHTML = `Count: ${count}`;
+
+  document.body.style.backgroundColor = backgroundColor;
+  document.getElementById("settingsDisplay").style.color = backgroundColor;
+
+  // Reset input
+  document.getElementById("input").value = "";
+}
+
+function getLocation() {
+  var inputValue = Number(document.getElementById("input").value);
+  var location;
+  var backgroundColor;
+  document.getElementById("skuDisplay").innerHTML = inputValue;
+
+  // Get group and location
+  if (skuListC.includes(inputValue)) {
+    location = skuListC.indexOf(inputValue) + 1;
+  } else {
+    skuListC.push(inputValue);
+    location = skuListC.indexOf(inputValue) + 1;
+  }
+
+  count += 1;
+
+  document.getElementById("group").innerHTML = '';
+  document.getElementById("location").innerHTML = location;
+  document.getElementById("counter").innerHTML = `Count: ${count}. Locations: ${skuListC.length}`;
 
   document.body.style.backgroundColor = backgroundColor;
   document.getElementById("settingsDisplay").style.color = backgroundColor;
