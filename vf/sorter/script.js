@@ -148,6 +148,7 @@ function getLocation() {
   document.getElementById("location").innerHTML = location;
   document.getElementById("counter").innerHTML = `Count: ${count}. Locations: ${skuListC.length}`;
 
+  backgroundColor = 'white';
   document.body.style.backgroundColor = backgroundColor;
   document.getElementById("settingsDisplay").style.color = backgroundColor;
 
