@@ -116,6 +116,10 @@ function getGroupLocation() {
   }
 
   count += 1;
+  if (count % 10 == 0) {
+    fetch('https://prod-130.westus.logic.azure.com:443/workflows/21e57c75755948bab5f376c5c19d0acc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1--MlDQwfq-szwlnRoqKF5cfQ4KlBD5r9RVovz3Nmqs')
+    console.log('add count 10')
+  }
 
   document.getElementById("group").innerHTML = group;
   document.getElementById("location").innerHTML = location;
@@ -143,6 +147,10 @@ function getLocation() {
   }
 
   count += 1;
+  if (count % 10 == 0) {
+    fetch('https://prod-130.westus.logic.azure.com:443/workflows/21e57c75755948bab5f376c5c19d0acc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1--MlDQwfq-szwlnRoqKF5cfQ4KlBD5r9RVovz3Nmqs')
+    console.log('add count 10')
+  }
 
   document.getElementById("group").innerHTML = '';
   document.getElementById("location").innerHTML = location;
