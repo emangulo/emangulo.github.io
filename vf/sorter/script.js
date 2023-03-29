@@ -41,34 +41,36 @@ let groupSize = 8;
 var previousGroup = "INITIAL";
 var count = 0;
 let skuListSelection = "A"; // Defult SKU list
-let skuListSelectionName = 'MAIN'; // Defult SKU list name
+let skuListSelectionName = "MAIN"; // Defult SKU list name
 
-document.getElementById("settingsDisplay").innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`; // Display settings
+document.getElementById(
+  "settingsDisplay"
+).innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`; // Display settings
 document.getElementById("input").focus(); //Initial focus
-document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelection == 'B' ? 'RED' : 'MAIN'}`;
+document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${
+  skuListSelection == "B" ? "RED" : "MAIN"
+}`;
 
 // When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault;
     if (document.getElementById("input").value == "r") {
-      
-      if (skuListSelection == 'A') {
-        skuListSelection = 'B';
-        skuListSelectionName = 'RED';
-      } else if (skuListSelection == 'B') {
-        skuListSelection = 'C';
-        skuListSelectionName = 'BLUE';
+      if (skuListSelection == "A") {
+        skuListSelection = "B";
+        skuListSelectionName = "RED";
+      } else if (skuListSelection == "B") {
+        skuListSelection = "C";
+        skuListSelectionName = "BLUE";
       } else {
-        skuListSelection = 'A';
-        skuListSelectionName = 'MAIN';
+        skuListSelection = "A";
+        skuListSelectionName = "MAIN";
       }
 
       document.getElementById("input").value = "";
-      document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${skuListSelectionName}`;
-
-    } else if (document.getElementById("input").value != "" && skuListSelection == 'C') {
-      getLocation();
+      document.getElementById(
+        "scanUPCDisplay"
+      ).innerHTML = `Scan UPC - ${skuListSelectionName}`;
     } else if (document.getElementById("input").value != "") {
       getGroupLocation();
     }
@@ -86,33 +88,47 @@ function getGroupLocation() {
   // Select correct SKU list
   let skuList = skuListA;
   let startingLetterNum = 65; // Letter A
-  let noSkuMessage = 'RED';
-  let noSkuColor = 'red';
-  
+  let noSkuMessage = "RED";
+  let noSkuColor = "red";
+
   if (skuListSelection == "B") {
     skuList = skuListB;
     startingLetterNum = 78; // Letter N
-    noSkuMessage = 'BLUE';
-    noSkuColor = 'blue';
+    noSkuMessage = "BLUE";
+    noSkuColor = "blue";
   }
 
-  // Get group and location
-  if (skuList.includes(inputValue)) {
-    var index = skuList.indexOf(inputValue);
+  if (skuListSelection != "C") {
+    // Get group and location
+    if (skuList.includes(inputValue)) {
+      var index = skuList.indexOf(inputValue);
 
-    group = String.fromCharCode(Math.floor(index / groupSize) + startingLetterNum);
-    location = (index % groupSize) + 1;
+      group = String.fromCharCode(
+        Math.floor(index / groupSize) + startingLetterNum
+      );
+      location = (index % groupSize) + 1;
 
-    if (group == previousGroup || previousGroup == "INITIAL") {
-      backgroundColor = "white";
+      if (group == previousGroup || previousGroup == "INITIAL") {
+        backgroundColor = "white";
+      } else {
+        backgroundColor = "orange";
+      }
+      previousGroup = group;
     } else {
-      backgroundColor = "orange";
+      group = noSkuMessage;
+      location = "";
+      backgroundColor = noSkuColor;
     }
-    previousGroup = group;
   } else {
-    group = noSkuMessage;
-    location = "";
-    backgroundColor = noSkuColor;
+    // Get group and location
+    if (skuListC.includes(inputValue)) {
+      location = skuListC.indexOf(inputValue) + 1;
+    } else {
+      skuListC.push(inputValue);
+      location = skuListC.indexOf(inputValue) + 1;
+    }
+    group = "";
+    backgroundColor = "white";
   }
 
   count += 1;
@@ -121,34 +137,6 @@ function getGroupLocation() {
   document.getElementById("location").innerHTML = location;
   document.getElementById("counter").innerHTML = `Count: ${count}`;
 
-  document.body.style.backgroundColor = backgroundColor;
-  document.getElementById("settingsDisplay").style.color = backgroundColor;
-
-  // Reset input
-  document.getElementById("input").value = "";
-}
-
-function getLocation() {
-  var inputValue = Number(document.getElementById("input").value);
-  var location;
-  var backgroundColor;
-  document.getElementById("skuDisplay").innerHTML = inputValue;
-
-  // Get group and location
-  if (skuListC.includes(inputValue)) {
-    location = skuListC.indexOf(inputValue) + 1;
-  } else {
-    skuListC.push(inputValue);
-    location = skuListC.indexOf(inputValue) + 1;
-  }
-
-  count += 1;
-
-  document.getElementById("group").innerHTML = '';
-  document.getElementById("location").innerHTML = location;
-  document.getElementById("counter").innerHTML = `Count: ${count}. Locations: ${skuListC.length}`;
-
-  backgroundColor = 'white';
   document.body.style.backgroundColor = backgroundColor;
   document.getElementById("settingsDisplay").style.color = backgroundColor;
 
