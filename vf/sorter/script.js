@@ -33,44 +33,36 @@ let skuListB = [
   196244897725, 196014239212, 196244872043, 700053333925,
 ];
 
-let skuListC = [];
-
 let groupSize = 8;
 
 // Initital settings
-var previousGroup = "INITIAL";
-var count = 0;
-let skuListSelection = "A"; // Defult SKU list
-let skuListSelectionName = "MAIN"; // Defult SKU list name
+let previousGroup = "INITIAL";
+let previousGroupNum = "INITIAL";
+
+let count = 0;
+let skuListSelection = "MAIN"; // Defult SKU list
 
 document.getElementById(
   "settingsDisplay"
 ).innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`; // Display settings
 document.getElementById("input").focus(); //Initial focus
-document.getElementById("scanUPCDisplay").innerHTML = `Scan UPC - ${
-  skuListSelection == "B" ? "RED" : "MAIN"
-}`;
+document.getElementById(
+  "scanUPCDisplay"
+).innerHTML = `Scan UPC - ${skuListSelection}`;
 
 // When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault;
     if (document.getElementById("input").value == "r") {
-      if (skuListSelection == "A") {
-        skuListSelection = "B";
-        skuListSelectionName = "RED";
-      } else if (skuListSelection == "B") {
-        skuListSelection = "C";
-        skuListSelectionName = "BLUE";
-      } else {
-        skuListSelection = "A";
-        skuListSelectionName = "MAIN";
-      }
+      skuListSelection == "MAIN"
+        ? (skuListSelection = "RED")
+        : (skuListSelection = "MAIN");
 
       document.getElementById("input").value = "";
       document.getElementById(
         "scanUPCDisplay"
-      ).innerHTML = `Scan UPC - ${skuListSelectionName}`;
+      ).innerHTML = `Scan UPC - ${skuListSelection}`;
     } else if (document.getElementById("input").value != "") {
       getGroupLocation();
     }
@@ -79,62 +71,48 @@ document.getElementById("input").addEventListener("keypress", function (event) {
 
 // When UPC is scanned
 function getGroupLocation() {
-  var inputValue = Number(document.getElementById("input").value);
-  var group;
-  var location;
-  var backgroundColor;
+  let inputValue = Number(document.getElementById("input").value);
+  let group;
+  let groupNum;
+  let backgroundColor;
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
   // Select correct SKU list
   let skuList = skuListA;
   let startingLetterNum = 65; // Letter A
-  let noSkuMessage = "RED";
-  let noSkuColor = "red";
 
-  if (skuListSelection == "B") {
+  if (skuListSelection == "RED") {
     skuList = skuListB;
     startingLetterNum = 78; // Letter N
-    noSkuMessage = "BLUE";
-    noSkuColor = "blue";
   }
 
-  if (skuListSelection != "C") {
-    // Get group and location
-    if (skuList.includes(inputValue)) {
-      var index = skuList.indexOf(inputValue);
+  // Get group and location
+  if (skuList.includes(inputValue)) {
+    let index = skuList.indexOf(inputValue);
+    group = String.fromCharCode(
+      Math.floor(index / groupSize) + startingLetterNum
+    );
+    groupNum = (index % groupSize) + 1;
 
-      group = String.fromCharCode(
-        Math.floor(index / groupSize) + startingLetterNum
-      );
-      location = (index % groupSize) + 1;
-
-      if (group == previousGroup || previousGroup == "INITIAL") {
-        backgroundColor = "white";
-      } else {
-        backgroundColor = "orange";
-      }
-      previousGroup = group;
+    if (group != previousGroup) {
+      backgroundColor = "orange";
+    } else if (groupNum != previousGroupNum) {
+      backgroundColor = "cyan";
     } else {
-      group = noSkuMessage;
-      location = "";
-      backgroundColor = noSkuColor;
+      backgroundColor = "white";
     }
+    previousGroup = group;
+    previousGroupNum = groupNum;
   } else {
-    // Get group and location
-    if (skuListC.includes(inputValue)) {
-      location = skuListC.indexOf(inputValue) + 1;
-    } else {
-      skuListC.push(inputValue);
-      location = skuListC.indexOf(inputValue) + 1;
-    }
-    group = "";
-    backgroundColor = "white";
+    group = skuListSelection == "MAIN" ? "RED" : "BLUE";
+    groupNum = "";
+    backgroundColor = skuListSelection == "MAIN" ? "red" : "blue";
   }
 
   count += 1;
 
   document.getElementById("group").innerHTML = group;
-  document.getElementById("location").innerHTML = location;
+  document.getElementById("location").innerHTML = groupNum;
   document.getElementById("counter").innerHTML = `Count: ${count}`;
 
   document.body.style.backgroundColor = backgroundColor;
