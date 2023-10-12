@@ -1,7 +1,7 @@
 
-let locationList = [];
+let locationList = [1,'x',3,'x'];
 
-let input = 'CL3'
+let input = '3';
 input != '' ? main(input) : null ;
 
 // // When "Enter" is pressed
@@ -19,30 +19,29 @@ input != '' ? main(input) : null ;
 function main(input) {
   if (input.slice(0,2) == 'CL') {
     clearLocation( input.slice(2) );
-  } else if (isSkuInLocation(input)) {
-    getLocation(input);
-  } else {
-    console.log('the sku is NOT in the list')
-    console.log(pushSku(input));
-    console.log(locationList);
+  } else {    
+    if (locationList.includes(Number(input))) {
+      console.log(locationList.indexOf(Number(input)));
+    } else {
+      console.log(pushSku(Number(input)));
+    }
   }
 }
 
-
-
-function isSkuInLocation(sku) {
-  return false
-}
-
-function getLocation(sku) {
-  return 'ok'
-}
-
 function pushSku(sku) {
-  locationList.push({sku: sku, count: 1});
-  return 'sku was pushed'
+  if (locationList.includes('x')) {
+    locationList[locationList.indexOf('x')] = sku;
+  } else {
+    locationList.push(sku);
+  }
+  console.log(`pushed ${sku}`)
 }
 
 function clearLocation(locationToClear) {
+  locationList[locationToClear] = 'x';
   console.log(`manually cleared ${locationToClear}`)
 }
+
+
+// debugging area
+console.log(locationList);
