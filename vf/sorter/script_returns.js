@@ -1,9 +1,5 @@
-
-let maxGroupSize = 3; // How many different SKUs to sort
-
 let count = 0;
-let skuList = [];
-
+let locationList = [];
 
 document.getElementById("input").focus(); //Initial focus
 
@@ -11,47 +7,72 @@ document.getElementById("input").focus(); //Initial focus
 document.getElementById("input").addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault;
-    getLocation();
+    let input = document.getElementById("input").value;
+    checkInput(input) ? main(input) : null;  
   } 
 });
 
+main = (input) => {
+  if (input.slice(0,2) == 'CL') {
+    clearLocation(input.slice(2));
+  } else {    
+    if (locationList.includes(Number(input))) {
+      setLocation(locationList.indexOf(Number(input)) + 1);
+    } else {
+      pushSku(Number(input));
+    }
+    addToCount(1);
+  }
+  setDisplay(input);
+  resetFocus();
+}
 
-function getLocation() {
-  let input = Number(document.getElementById("input").value);
-  document.getElementById("skuDisplay").innerHTML = input;
-
-  
-
-  // Get location
-  if (skuList.includes(input)) {
-    let index = skuList.findIndex( x => x === input);
-    document.getElementById("location").innerHTML = index + 1;
-    document.body.style.backgroundColor = 'white';
+checkInput = (input) => {
+  if (input.slice(0,2) != 'CL' && isNaN(input)) {
+    setDisplay('NOT VALID INPUT');
+    setLocation('ERR');
+    resetFocus();
+    return false;
   } else {
-    addToList(input);
+    return true;
   }
   
-  count += 1;
+}
+
+pushSku = (sku) => {
+  if (locationList.includes(null)) {
+    locationList[locationList.indexOf(null)] = sku;
+    setLocation(locationList.indexOf(sku) + 1);
+  } else {
+    setLocation(locationList.push(sku));
+  }
+}
+
+clearLocation = (locationToClear) => {
+  setLocation('');
+  locationList[locationToClear - 1] = null;
+}
+
+setLocation = (value) => {
+  document.getElementById("location").innerHTML = value;
+}
+
+setDisplay = (input) => {
+  document.getElementById("display").innerHTML = input;
+}
+
+addToCount = (addNum) => {
+  count += addNum;
   document.getElementById("counter").innerHTML = `Count: ${count}`;
+}
 
-  // Reset input
+resetFocus = () => {
   document.getElementById("input").value = "";
-  console.log(skuList);
+  console.log(locationList);
 }
 
-function addToList(input) {
-  if (skuList.length >= maxGroupSize) {
-    let mostFilledLocation = 2;
-    document.getElementById("location").innerHTML = `CL#`;
-    document.body.style.backgroundColor = 'orange';
-  } else {
-    skuList.push(input)
-    let index = skuList.findIndex( x => x === input);
-    document.getElementById("location").innerHTML = index + 1;
-    document.body.style.backgroundColor = 'white';
-  }
-}
+/* TODO:
+  add UPC input validation
+  add background color change
 
-function clearLocation() {
-
-}
+*/
