@@ -1,4 +1,8 @@
 // Input UPC list and the group size
+let singlesSkuList = [
+  123, 456, 789,
+]
+
 let skuList = [
   700053843400, 700053843417, 700053843479, 700053843486, 700053843493,
   700053843509, 700053843516, 700053843523, 700053843530, 700053843547,
@@ -63,7 +67,11 @@ function getGroupLocation() {
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
   // Get group and location
-  if (skuList.includes(inputValue)) {
+  if (singlesSkuList.includes(inputValue)) {
+    group = "SINGLE";
+    groupNum = "";
+    backgroundColor = "lime";
+  } else if (skuList.includes(inputValue)) {
     let index = skuList.indexOf(inputValue);
     group = String.fromCharCode(Math.floor(index / groupSize) + 65);
     groupNum = (index % groupSize) + 1;
@@ -71,8 +79,8 @@ function getGroupLocation() {
     // Update backgound colors if group changes
     if (group != previousGroup) {
       backgroundColor = "orange";
-    } else if (groupNum != previousGroupNum) {
-      backgroundColor = "cyan";
+    // } else if (groupNum != previousGroupNum) {
+    //   backgroundColor = "cyan";
     } else {
       backgroundColor = "white";
     }
