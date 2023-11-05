@@ -1,5 +1,5 @@
-// Input UPC numbers and the numbers of SKUs per person to sort in each group here
-let skuListA = [
+// Input UPC list and the group size
+let skuList = [
   700053843400, 700053843417, 700053843479, 700053843486, 700053843493,
   700053843509, 700053843516, 700053843523, 700053843530, 700053843547,
   700053843554, 700053843561, 700053843578, 700053843585, 700053843592,
@@ -14,9 +14,6 @@ let skuListA = [
   191476703134, 191476703271, 191476703417, 191476703653, 191476703943,
   191476704254, 191476704575, 191476704889, 191476705183, 191476705480,
   191476705787, 191476706081, 191476706326, 191476706807, 191476707040,
-];
-
-let skuListB = [
   196244904928, 196244872159, 196244874115, 196245114319, 196245967519,
   700053804722, 700053803947, 658100946690, 658100946706, 658100946720,
   658100946737, 706420455948, 887682620913, 637439878797, 191165040694,
@@ -31,39 +28,27 @@ let skuListB = [
   196244787088, 192363877211, 195438342850, 194903673727, 196244794017,
   195436425265, 195436453275, 196014236020, 196014236082, 196244895981,
   196244897725, 196014239212, 196244872043, 700053333925,
-];
+]
 
-let groupSize = 8;
+let groupSize = 10;
+
+
+// ---------- PROGRAM START. DO NOT CHANGE BELOW ----------
 
 // Initital settings
-let previousGroup = "INITIAL";
-let previousGroupNum = "INITIAL";
+let previousGroup = "i";
+let previousGroupNum = "i";
 
 let count = 0;
-let skuListSelection = "MAIN"; // Defult SKU list
 
-document.getElementById(
-  "settingsDisplay"
-).innerHTML = `SKU List A: ${skuListA.length}. SKU List B: ${skuListB.length}. Group Size: ${groupSize}`; // Display settings
+document.getElementById("settingsDisplay").innerHTML = `SKUs: ${skuList.length}. Group Size: ${groupSize}. Groups:${Math.ceil(skuList.length / groupSize)}`; // Display settings
 document.getElementById("input").focus(); //Initial focus
-document.getElementById(
-  "scanUPCDisplay"
-).innerHTML = `Scan UPC - ${skuListSelection}`;
 
 // When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault;
-    if (document.getElementById("input").value == "r") {
-      skuListSelection == "MAIN"
-        ? (skuListSelection = "RED")
-        : (skuListSelection = "MAIN");
-
-      document.getElementById("input").value = "";
-      document.getElementById(
-        "scanUPCDisplay"
-      ).innerHTML = `Scan UPC - ${skuListSelection}`;
-    } else if (document.getElementById("input").value != "") {
+    if (document.getElementById("input").value != "") {
       getGroupLocation();
     }
   }
@@ -77,23 +62,13 @@ function getGroupLocation() {
   let backgroundColor;
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
-  // Select correct SKU list
-  let skuList = skuListA;
-  let startingLetterNum = 65; // Letter A
-
-  if (skuListSelection == "RED") {
-    skuList = skuListB;
-    startingLetterNum = 78; // Letter N
-  }
-
   // Get group and location
   if (skuList.includes(inputValue)) {
     let index = skuList.indexOf(inputValue);
-    group = String.fromCharCode(
-      Math.floor(index / groupSize) + startingLetterNum
-    );
+    group = String.fromCharCode(Math.floor(index / groupSize) + 65);
     groupNum = (index % groupSize) + 1;
 
+    // Update backgound colors if group changes
     if (group != previousGroup) {
       backgroundColor = "orange";
     } else if (groupNum != previousGroupNum) {
@@ -104,9 +79,9 @@ function getGroupLocation() {
     previousGroup = group;
     previousGroupNum = groupNum;
   } else {
-    group = skuListSelection == "MAIN" ? "RED" : "BLUE";
+    group = "N/A";
     groupNum = "";
-    backgroundColor = skuListSelection == "MAIN" ? "red" : "blue";
+    backgroundColor = "red";
   }
 
   count += 1;

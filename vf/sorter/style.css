@@ -29,9 +29,9 @@ footer {
   bottom: 0;
 }
 
-#settingsDisplay {
+/* #settingsDisplay {
   color: white;
-}
+} */
 
 #main-container {
  display: flex; 
