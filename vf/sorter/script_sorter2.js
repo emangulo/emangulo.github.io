@@ -1,4 +1,8 @@
 // Input UPC list and the group size
+let singlesSkuList = [
+  123, 456, 789,
+]
+
 let skuList = [];
 
 let groupSize = 10;
@@ -7,8 +11,8 @@ let groupSize = 10;
 // ---------- PROGRAM START. DO NOT CHANGE BELOW ----------
 
 // Initital settings
-let previousGroup = "i";
-let previousGroupNum = "i";
+let previousGroup;
+let previousGroupNum;
 
 let count = 0;
 
@@ -34,7 +38,10 @@ function getGroupLocation() {
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
   // Get group and location
-  if (skuList.includes(inputValue)) {
+  if (singlesSkuList.includes(inputValue)) {
+    group = "SINGLE";
+    groupNum = "";
+  } else if (skuList.includes(inputValue)) {
     let index = skuList.indexOf(inputValue);
     group = String.fromCharCode(Math.floor(index / groupSize) + 65);
     groupNum = (index % groupSize) + 1;
