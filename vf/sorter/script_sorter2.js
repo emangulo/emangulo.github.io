@@ -5,7 +5,7 @@ let singlesSkuList = [
 
 let skuList = [];
 
-let groupSize = 10;
+let groupSize = 90;
 
 // ---------- PROGRAM START. DO NOT CHANGE BELOW ----------
 
