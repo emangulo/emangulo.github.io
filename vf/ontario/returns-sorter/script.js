@@ -37,6 +37,8 @@ function getLocation(inputValue) {
     location = "OTHER";
   }
 
+  getLocationFromServer();
+
   increaseCountBy(1);
 
   setLocationDisplay(location);
@@ -45,6 +47,13 @@ function getLocation(inputValue) {
 
 
 //HELPER FUNCTIONS
+
+function getLocationFromServer() {
+  fetch('http://localhost:3000')
+    .then((response) => response.text())
+    .then((message) => console.log(message))
+}
+
 function setLocationDisplay(location) {
   document.getElementById("location").innerHTML = location;
 }
