@@ -8,10 +8,10 @@ document.getElementById("input").addEventListener("keypress", function (event) {
     event.preventDefault;
     let inputValue = document.getElementById("input").value;
 
-    if ((inputValue != "") & (inputValue.length == 12)) {
+    if ((inputValue != "") & (inputValue.length == 12) & (Number.isInteger(Number(inputValue)))) {
       getLocation(Number(inputValue));
     } else {
-      setLocationDisplay("Not UPC");
+      setLocationDisplay("INVALID UPC");
     }
     setUPCDisplay(inputValue);
     resetInputBox();
@@ -29,8 +29,6 @@ async function getLocation(upc) {
 
 function formatOutput(input) {
   let result = input.slice(0,1) + " " + input.slice(1,3) + "- " + input.slice(3,5) + "- " + input.slice(5,6) + input.slice(6,8)
-
-  console.log(result)
   return result
 }
 
