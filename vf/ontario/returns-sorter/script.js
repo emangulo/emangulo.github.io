@@ -1,10 +1,3 @@
-// Input Core Classic UPC list
-let locationList = [
-  {location: 'A', UPC: 123456789123},
-  {location: 'B', UPC: 321654987321},
-];
-
-// ---------- PROGRAM START. DO NOT CHANGE BELOW ----------
 
 let count = 0;
 document.getElementById("input").focus(); //Initial focus
@@ -26,32 +19,19 @@ document.getElementById("input").addEventListener("keypress", function (event) {
 });
 
 
-function getLocation(inputValue) {
-  let location;
-  let backgroundColor;
+async function getLocation(upc) {
+  const response = await fetch(`http://localhost:3000/location/${upc}`, {method: "PUT"})
+  var data = await response.json()
 
-  // Get location
-  if (locationList.includes(inputValue)) {
-    location = "CORE CLASSIC";
-  } else {
-    location = "OTHER";
-  }
-
-  getLocationFromServer();
-
+  setLocationDisplay(formatOutput(data[0].location));
   increaseCountBy(1);
-
-  setLocationDisplay(location);
-  setBackgroundColor(backgroundColor);
 }
 
+function formatOutput(input) {
+  let result = input.slice(0,1) + " " + input.slice(1,3) + "- " + input.slice(3,5) + "- " + input.slice(5,6) + input.slice(6,8)
 
-//HELPER FUNCTIONS
-
-function getLocationFromServer() {
-  fetch('http://localhost:3000')
-    .then((response) => response.text())
-    .then((message) => console.log(message))
+  console.log(result)
+  return result
 }
 
 function setLocationDisplay(location) {
@@ -69,8 +49,4 @@ function resetInputBox() {
 function increaseCountBy(increaseBy) {
   count += increaseBy;
   document.getElementById("counter").innerHTML = `Count: ${count}`;
-}
-
-function setBackgroundColor(color) {
-  document.body.style.backgroundColor = color;
 }
