@@ -142,6 +142,12 @@ let coreSkuList = [
   194905157904, 194905158215, 194905158581, 194905158932, 194905159212,
 ];
 
+let categorySkuList = {
+  123123123123: "1 MEN'S",
+  456456456456: "2 WOMEN'S",
+  789789789789: "3 CHILDREN",
+};
+
 // ---------- PROGRAM START. DO NOT CHANGE BELOW ----------
 
 // Initital settings
@@ -158,14 +164,13 @@ document.getElementById("input").addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     event.preventDefault;
     if (document.getElementById("input").value != "") {
-      getGroupLocation();
+      getGroupLocation(Number(document.getElementById("input").value));
     }
   }
 });
 
 // When UPC is scanned
-function getGroupLocation() {
-  let inputValue = Number(document.getElementById("input").value);
+function getGroupLocation(inputValue) {
   let group;
   let backgroundColor;
   document.getElementById("skuDisplay").innerHTML = inputValue;
@@ -174,6 +179,9 @@ function getGroupLocation() {
   if (coreSkuList.includes(inputValue)) {
     group = "CORE CLASSIC";
     backgroundColor = "limegreen";
+  } else if (categorySkuList[inputValue] != undefined) {
+    group = categorySkuList[inputValue];
+    backgroundColor = "lightblue";
   } else {
     group = "OTHER";
     backgroundColor = "white";
