@@ -1,5 +1,5 @@
 // Input Core Classic UPC list
-let coreSkuList = [
+let skuList = [
   196573344020, 196573344051, 196573344303, 196573344365, 196573344525,
   196573344587, 196573344853, 196573344921, 196573345102, 196573345218,
   196573345409, 196573345492, 196573345584, 196573345782, 196573345881,
@@ -176,20 +176,24 @@ function getGroupLocation(inputValue) {
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
   // Get group and location
-  if (coreSkuList.includes(inputValue)) {
+  if (skuList.includes(inputValue)) {
     group = "CORE CLASSIC";
+    groupLabel = "CORE CLASSIC"
     backgroundColor = "limegreen";
   } else if (categorySkuList[inputValue] != undefined) {
     group = categorySkuList[inputValue];
+    groupLabel = "OTHER"
     backgroundColor = "lightblue";
   } else {
     group = "OTHER";
+    groupLabel = "";
     backgroundColor = "white";
   }
 
   count += 1;
 
   document.getElementById("group").innerHTML = group;
+  document.getElementById("group-label").innerHTML = `GROUP - ${groupLabel}`;
   document.getElementById("counter").innerHTML = `Count: ${count}`;
   document.body.style.backgroundColor = backgroundColor;
 
