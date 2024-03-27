@@ -1,1 +1,0 @@
-[VF Projects](../emangulo.github.io/vf/index.md)
