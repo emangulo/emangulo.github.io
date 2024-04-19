@@ -12,9 +12,8 @@ document.getElementById("input").focus(); //Initial focus
 // When "Enter" is pressed
 document.getElementById("input").addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
-    event.preventDefault;  
+    event.preventDefault;
     addCount(Number(document.getElementById("input").value));
-    
   }
 });
 
@@ -22,7 +21,7 @@ function addCount(input) {
   cycleTime = (Date.now() - prevTime) / 1000;
   prevTime = Date.now();
 
-  log.unshift(input + " - " + cycleTime);
+  log.unshift(count + 1 + " - " + input + " - " + cycleTime);
 
   count += 1;
 
