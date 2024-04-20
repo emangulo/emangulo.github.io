@@ -21,7 +21,7 @@ function addCount(input) {
   cycleTime = (Date.now() - prevTime) / 1000;
   prevTime = Date.now();
 
-  log.unshift(count + 1 + " - " + input + " - " + cycleTime);
+  log.unshift(count + " - " + input + " - " + cycleTime);
 
   count += 1;
 
