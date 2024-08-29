@@ -20,6 +20,7 @@ document.getElementById("input").addEventListener("keypress", function (event) {
 // When UPC is scanned
 function getGroupLocation(inputValue) {
   let group;
+  let backgroundColor = "white";
   document.getElementById("skuDisplay").innerHTML = inputValue;
 
   let index = skuList.indexOf(inputValue);
@@ -29,13 +30,14 @@ function getGroupLocation(inputValue) {
     group = skuList.indexOf(inputValue) + 1;
   } else {
     group = index + 1;
+    backgroundColor = "limegreen";
   }
 
   count += 1;
 
   document.getElementById("group").innerHTML = group;
   document.getElementById("counter").innerHTML = `Count: ${count}`;
-
+  document.body.style.backgroundColor = backgroundColor;
   // Reset input
   document.getElementById("input").value = "";
 }
