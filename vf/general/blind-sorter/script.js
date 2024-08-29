@@ -1,4 +1,4 @@
-let skuList = [123, 456];
+let skuList = [];
 
 // Initital settings
 
